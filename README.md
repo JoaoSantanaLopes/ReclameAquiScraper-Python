@@ -1,7 +1,7 @@
 
 # Reclame Aqui Web Scraper
 
-Este projeto é um web scraper em Python para coletar reclamações do site Reclame Aqui e exportar para Excel.
+Este projeto é um web scraper em Python para coletar informações de 6 empresas presentes no site Reclame Aqui e exportar para Excel, utilizando as bibliotecas selenium, pandas e beautifulSoup.
 
 ## Requisitos
 
@@ -22,11 +22,11 @@ Este projeto é um web scraper em Python para coletar reclamações do site Recl
     ```
 
 3.  **Execute o scraper:**
-    Abra um terminal na pasta "Código" e rode o comando.
+    Abra um terminal na pasta "src" e rode o comando.
     ```bash
     python main.py
     ```
 
 ##  Saída
 
-O scraper gerará um arquivo Excel (`.xlsx`) na pasta onde seu terminal está aberto.
+O scraper gerará um arquivo Excel (`.xlsx`) na pasta "planilhas" com as informações extraídas das empresas.
