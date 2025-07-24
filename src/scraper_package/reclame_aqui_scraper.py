@@ -58,12 +58,24 @@ class ReclameAquiScraper:
             return False
 
     def get_best_companies_info(self) -> list[dict[str, str]]: 
-            
+            """
+            Acessa o link das 3 melhores empresas que estão guardados e retorna as informações 
+            desejadas das empresas.
+            """
             infos = []
 
             for link in self._best_companies_links:
+
+                # Ao tentar redirecionar a página para outros links, acabei esbarrando em um problema que 
+                # foram os CAPTCHAS, e a estrátegia que encontrei para contorná-los foi reiniciar
+                # a sessão do navegador (abrindo e fechando uma nova instância),
+                # assim conseguindo acessar os sites desejados, essa solução por mais que consuma mais
+                # recursos do que apenas redirecionar a página, foi a solução mais satisfatória que encontrei
+                # para solucionar este problema. 
+
                 self._driver_manager.close_driver()
                 self._page_handler._driver = self._driver_manager.start_driver()
+                # ------------------------------------------------------------------
                 self._page_handler.navigate_to_url(link)
                 html = self._page_handler.get_current_page_source()
                 infos.append(self._extract_info(BeautifulSoup(html, 'html.parser')))
@@ -71,12 +83,24 @@ class ReclameAquiScraper:
             return infos
     
     def get_worst_companies_info(self) -> list[dict[str, str]]: 
-            
+            """
+            Acessa o link das 3 piores empresas que estão guardados e retorna as informações 
+            desejadas das empresas.
+            """
             infos = []
 
             for link in self._worst_companies_links:
+
+                # Ao tentar redirecionar a página para outros links, acabei esbarrando em um problema que 
+                # foram os CAPTCHAS, e a estrátegia que encontrei para contorná-los foi reiniciar
+                # a sessão do navegador (abrindo e fechando uma nova instância),
+                # assim conseguindo acessar os sites desejados, essa solução por mais que consuma mais
+                # recursos do que apenas redirecionar a página, foi a solução mais satisfatória que encontrei
+                # para solucionar este problema.
+
                 self._driver_manager.close_driver()
                 self._page_handler._driver = self._driver_manager.start_driver()
+                # ------------------------------------------------------------------
                 self._page_handler.navigate_to_url(link)
                 html = self._page_handler.get_current_page_source()
                 infos.append(self._extract_info(BeautifulSoup(html, 'html.parser')))
@@ -84,6 +108,11 @@ class ReclameAquiScraper:
             return infos
     
     def _extract_info(self, html: BeautifulSoup) -> dict[str, str]:
+        """
+            Método auxiliar que faz todo o trabalho de capturar as informações desejadas no html passado
+            e transforma em uma lista de dicionários
+        """
+
         nome = html.find('h2', attrs={'class': 'hero-font-semibold hero-text-[24px] max-md:hero-text-[18px] hero-text-[#191B1A] hero-text-ellipsis hero-overflow-hidden hero-m-0 hero-line-clamp-2'})
         nota = html.find('b', attrs={'class': 'go3621686408'})
 

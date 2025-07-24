@@ -2,7 +2,7 @@
 
 import pandas as pd
 import traceback
-from typing import List, Any, Dict
+import os
 
 class DataProcessor:
     """
@@ -13,7 +13,7 @@ class DataProcessor:
         Inicializa o DataProcessor.
         """
     
-    def export_to_excel(self, data_list: List[Dict[str, Any]], filename: str) -> bool:
+    def export_to_excel(self, data_list: list[dict[str, str]], filename: str, dir: str) -> bool:
         """
         Converte uma lista de dicionários para um DataFrame e exporta para um arquivo Excel (.xlsx).
         """
@@ -23,8 +23,10 @@ class DataProcessor:
             return False
         
         try:
+            full_output_path = os.path.join(dir, filename)
+            os.makedirs(dir, exist_ok=True)
             df = pd.DataFrame(data_list)
-            df.to_excel(filename, index=False)
+            df.to_excel(full_output_path, index=False)
             return True
         except Exception as e:
             print(f"Falha ao exportar DataFrame para Excel: {e}")
