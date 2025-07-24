@@ -1,6 +1,6 @@
-from Src.reclame_aqui_scraper import ReclameAquiScraper
+from scraper_package.reclame_aqui_scraper import ReclameAquiScraper
 from bs4 import BeautifulSoup
-from Src.data_processor import DataProcessor
+from scraper_package.data_processor import DataProcessor
 
 Scraper = ReclameAquiScraper()
 

@@ -68,7 +68,7 @@ class Page:
             return elements
         
         except TimeoutException: 
-            print(f"AVISO: Nenhum elemento encontrado após {timeout}s por  '{value}'.")
+            print(f"AVISO: Nenhum elemento encontrado após {timeout}s.")
             traceback.print_exc()
             return []
         except WebDriverException as e:
@@ -123,7 +123,7 @@ class Page:
             traceback.print_exc()
             return False
         except WebDriverException as e:
-            print(f"Erro do WebDriver ao tentar clicar no elemento por: '{value}'. Detalhes: {e}") 
+            print(f"Erro do WebDriver ao tentar clicar no elemento. Detalhes: {e}") 
             traceback.print_exc() 
             return False
         except Exception as e:
