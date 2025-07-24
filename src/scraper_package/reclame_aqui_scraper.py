@@ -13,6 +13,9 @@ class ReclameAquiScraper:
     BASE_URL = "https://www.reclameaqui.com.br/" 
 
     def __init__(self, headless: bool = False):
+        """
+        Inicializa o Driver do Selenium, o manipulador de página e as listas para armazenar links de empresas.
+        """
         self._driver_manager = WebDriverManager(headless=headless)
         self._page_handler = Page(self._driver_manager.get_driver())
         self._best_companies_links = []
