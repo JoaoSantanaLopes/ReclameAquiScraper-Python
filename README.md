@@ -7,7 +7,7 @@ Este projeto é um web scraper em Python para coletar informações das 3 empres
 
 * **Python 3.9+**
 * **Google Chrome Browser**
-* **Chrome WebDriver**
+* **Chrome WebDriver** 
 
 ## Instalação e Uso
 
