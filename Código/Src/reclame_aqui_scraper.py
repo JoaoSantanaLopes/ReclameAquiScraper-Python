@@ -21,24 +21,22 @@ class ReclameAquiScraper:
 
     def get_best_and_worst_links(self, categoria : str):
         """
-        Navega para a URL base e clica no link/botão 'Best Bets' (ou similar).
+        captura o link das 6 empresas na página principal 
         """
-        print("INFO: Tentando navegar e clicar no link 'Best Bets'...")
         
-        # 1. Navegar para a URL base
         if not self._page_handler.navigate_to_url(self.BASE_URL):
             print("Falha ao navegar para a URL base para clicar no link.")
             return False
         try:
-            if not self._page_handler.click_element(By.XPATH, "//input[contains(@placeholder, 'busque uma categoria')]"):
+            if not self._page_handler.click_element(By.XPATH, "//input[contains(@placeholder, 'busque uma categoria')]", jsClick=True):
                 print("Não foi possível clicar no input para escolher as empresas.")
                 return False
-            sleep(2)
-            if not self._page_handler.click_element(By.XPATH, f"//*[contains(text(), '{categoria}')]"):
+            if not self._page_handler.click_element(By.XPATH, f"//*[contains(text(), '{categoria}')]", jsClick=True):
                 print("Não foi possível clicar no botão Casa de Aposta.")
                 return False
             
             melhores = self._page_handler.find_elements(By.ID, 'home_ranking_segmento_card_empresa')
+
             for melhor in melhores:
                 self._best_companies_links.append(melhor.get_attribute('href'))
                 print(self._best_companies_links)
@@ -48,16 +46,18 @@ class ReclameAquiScraper:
                 return False
             
             piores = self._page_handler.find_elements(By.ID, 'home_ranking_segmento_card_empresa')
+
             for pior in piores:
                 self._worst_companies_links.append(pior.get_attribute('href'))
                 print(self._worst_companies_links)
 
+            return True
         except Exception as e:
-            print(f"ERRO: Um erro inesperado ocorreu: {e}")
+            print(f"Um erro inesperado ocorreu. {e}")
             traceback.print_exc()
             return False
 
-    def get_best_companies_info(self) -> list[list[str]]: 
+    def get_best_companies_info(self) -> list[dict[str, str]]: 
             
             infos = []
 
@@ -70,7 +70,7 @@ class ReclameAquiScraper:
  
             return infos
     
-    def get_worst_companies_info(self) -> list[list[str]]: 
+    def get_worst_companies_info(self) -> list[dict[str, str]]: 
             
             infos = []
 
@@ -83,20 +83,29 @@ class ReclameAquiScraper:
  
             return infos
     
-    def _extract_info(self, html: BeautifulSoup) -> list[str]:
-        infos = []
+    def _extract_info(self, html: BeautifulSoup) -> dict[str, str]:
         nome = html.find('h2', attrs={'class': 'hero-font-semibold hero-text-[24px] max-md:hero-text-[18px] hero-text-[#191B1A] hero-text-ellipsis hero-overflow-hidden hero-m-0 hero-line-clamp-2'})
         nota = html.find('b', attrs={'class': 'go3621686408'})
 
         span = html.findAll('span', attrs={'class': "go2549335548"})
-        respostas = span[1].find('strong')
+        indice_respostas = span[1].find('strong')
+        indice_voltariam = span[4].find('strong')
+        indice_solucao = span[5].find('strong')
 
+        aux = span[3].findAll('strong')
+        nota_consumidor = aux[1]
 
-        texto_nota = nota.text
-        if texto_nota == '':
-            texto_nota = '0/10.'
-        
-        print(nome.text)
-        print(texto_nota)
-        print(respostas.text)
+        text_nota = nota.text
+        if text_nota == '':
+            text_nota = '0/10.'
+
+        info_dict = {
+            "Nome": nome.text,
+            "Nota": text_nota,
+            "Indice de Respostas": indice_respostas.text,
+            "Indice de Consumidores que Voltariam": indice_voltariam.text,
+            "Indice de Solucao": indice_solucao.text,
+            "Nota do Consumidor": nota_consumidor.text
+        }
+        return info_dict
 

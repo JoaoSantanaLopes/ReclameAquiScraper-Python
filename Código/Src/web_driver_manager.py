@@ -19,7 +19,7 @@ class WebDriverManager:
         options.add_argument("--disable-gpu")
         
         options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")
-        options.add_argument('window-size=1000,800')
+        options.add_argument('window-size=1000,1000')
 
         if self._headless:
             options.add_argument('--headless')
@@ -36,25 +36,22 @@ class WebDriverManager:
                 
     
             except (SessionNotCreatedException, NoSuchDriverException) as e:
-                print(f"ERRO CRÍTICO: Problema de compatibilidade ou driver não encontrado/configurado. Detalhes: {e}")
-                print("Por favor, verifique:")
-                print("  1. Se a versão do chromedriver é compatível com a versão do seu Google Chrome.")
-                print("  2. Se o chromedriver está no PATH do sistema OU o caminho está correto no driver_path.")
+                print(f"ERRO CRÍTICO: Problema de compatibilidade ou driver não encontrado. {e}")
                 self._driver = None 
                 raise 
 
             except WebDriverException as e:
-                print(f"ERRO: Um erro do WebDriver ocorreu durante a inicialização. Detalhes: {e}")
+                print(f"Um erro do WebDriver ocorreu durante a inicialização. {e}")
                 self._driver = None
                 raise
 
             except FileNotFoundError as e:
-                print(f"ERRO: O arquivo do WebDriver não foi encontrado. Detalhes: {e}")
+                print(f"O arquivo do WebDriver não foi encontrado. {e}")
                 self._driver = None
                 raise
 
             except Exception as e:
-                print(f"ERRO: Um erro inesperado ocorreu durante a inicialização do WebDriver: {e}")
+                print(f"Um erro inesperado ocorreu durante a inicialização do WebDriver. {e}")
                 self._driver = None
                 raise
         

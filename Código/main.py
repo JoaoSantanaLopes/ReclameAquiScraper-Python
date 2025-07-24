@@ -1,10 +1,15 @@
 from Src.reclame_aqui_scraper import ReclameAquiScraper
 from bs4 import BeautifulSoup
+from Src.data_processor import DataProcessor
 
 Scraper = ReclameAquiScraper()
-Scraper.get_best_and_worst_links("Casa de Aposta")
-Scraper.get_best_companies_info()
-Scraper.get_worst_companies_info()
-#site = BeautifulSoup(, 'html.parser')
-#noticias = site.find('button', attrs={'class': 'svelte-13kut5s'})
-#print(noticias.prettify())
+
+if Scraper.get_best_and_worst_links("Casa de Aposta"):
+    melhores = Scraper.get_best_companies_info()
+    piores = Scraper.get_worst_companies_info()
+    melhores_e_piores = melhores + piores
+    data_processor = DataProcessor()
+    data_processor.export_to_excel(melhores_e_piores, 'melhores_e_piores.xlsx')
+    
+
+
