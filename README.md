@@ -11,7 +11,7 @@ Este projeto é um web scraper em Python para coletar reclamações do site Recl
 
 ## Instalação e Uso
 
-1.  **Clone o projeto para sua máquina:**
+1.  **Clone o repositório para sua máquina:**
     ```bash
     git clone https://github.com/JoaoSantanaLopes/ReclameAquiScraper-Python.git
     ```
@@ -24,7 +24,7 @@ Este projeto é um web scraper em Python para coletar reclamações do site Recl
 3.  **Execute o scraper:**
     Abra um terminal na pasta "Código" e rode o comando.
     ```bash
-    (venv) python main.py
+    python main.py
     ```
 
 ##  Saída
