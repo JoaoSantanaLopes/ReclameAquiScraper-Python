@@ -10,6 +10,6 @@ if Scraper.get_best_and_worst_links("Casa de Aposta"):
     melhores_e_piores = melhores + piores
     data_processor = DataProcessor()
     data_processor.export_to_excel(melhores_e_piores, 'melhores_e_piores.xlsx')
-    
+    print("arquivos exportados com sucesso")
 
 

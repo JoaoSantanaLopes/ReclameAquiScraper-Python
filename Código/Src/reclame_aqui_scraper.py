@@ -39,7 +39,6 @@ class ReclameAquiScraper:
 
             for melhor in melhores:
                 self._best_companies_links.append(melhor.get_attribute('href'))
-                print(self._best_companies_links)
 
             if not self._page_handler.click_element(By.CLASS_NAME, "svelte-1n79oku"):
                 print("Não foi possível clicar no botão piores.")
@@ -49,7 +48,6 @@ class ReclameAquiScraper:
 
             for pior in piores:
                 self._worst_companies_links.append(pior.get_attribute('href'))
-                print(self._worst_companies_links)
 
             return True
         except Exception as e:
